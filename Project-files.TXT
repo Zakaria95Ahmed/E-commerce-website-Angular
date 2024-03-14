@@ -1,0 +1,2532 @@
+تفضل :package.json file contains on [ {
+  "name": "e-commerce",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^16.0.0",
+    "@angular/common": "^16.0.0",
+    "@angular/compiler": "^16.0.0",
+    "@angular/core": "^16.0.0",
+    "@angular/forms": "^16.0.0",
+    "@angular/platform-browser": "^16.0.0",
+    "@angular/platform-browser-dynamic": "^16.0.0",
+    "@angular/router": "^16.0.0",
+    "@fortawesome/fontawesome-free": "^6.4.2",
+    "bootstrap": "^5.3.2",
+    "jwt-decode": "^3.1.2",
+    "ngx-owl-carousel-o": "^16.0.0",
+    "ngx-pagination": "^6.0.3",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.13.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^16.0.0",
+    "@angular/cli": "~16.0.0",
+    "@angular/compiler-cli": "^16.0.0",
+    "@types/jasmine": "~4.3.0",
+    "jasmine-core": "~4.6.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    "typescript": "~5.0.2"
+  }
+}] 
+وايضا :angular.json file contains on[ {
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "E-Commerce": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/e-commerce",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "./node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
+              "./node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
+              "./node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "E-Commerce:build:production"
+            },
+            "development": {
+              "browserTarget": "E-Commerce:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "E-Commerce:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "be801b30-aa8d-42e8-8a82-342c98a88305"
+  }
+}]
+وايضا 
+app.component.html contains on those files [<app-loader></app-loader>
+<app-navbar></app-navbar>
+<router-outlet></router-outlet>
+<app-footer></app-footer>
+]  , ايضا 
+
+
+
+app.component.ts file contain on [
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'E-Commerce';
+}
+
+]
+------------
+app.module.ts file contain on [
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AboutComponent } from './components/about/about.component';
+import { BrandComponent } from './components/brand/brand.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HomeComponent } from './components/home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ProductsComponent } from './components/products/products.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { FeaturedProductsComponent } from './components/featured-products/featured-products.component';
+import { ProductItemComponent } from './components/product-item/product-item.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component'
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { MainSliderComponent } from './components/main-slider/main-slider.component';
+import { ConcatPipe } from './concat.pipe';
+import { SearchPipe } from './search.pipe';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { HttpInterceptorInterceptor } from './http-interceptor.interceptor';
+import { LoaderComponent } from './components/loader/loader.component';
+import { MainCategoriesComponent } from './components/main-categories/main-categories.component';
+import { CategoryDetailsComponent } from './components/category-details/category-details.component';
+import { BrandDetailsComponent } from './components/brand-details/brand-details.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    AboutComponent,
+    BrandComponent,
+    CategoriesComponent,
+    FooterComponent,
+    HomeComponent,
+    NavbarComponent,
+    NotFoundComponent,
+    ProductsComponent,
+    SignInComponent,
+    SignUpComponent,
+    FeaturedProductsComponent,
+    ProductItemComponent,
+    ProductDetailsComponent,
+    MainSliderComponent,
+    ConcatPipe,
+    SearchPipe,
+    CheckoutComponent,
+    OrdersComponent,
+    LoaderComponent,
+    MainCategoriesComponent,
+    CategoryDetailsComponent,
+    BrandDetailsComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    CarouselModule,
+  ],
+  providers: [
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorInterceptor,
+      multi:true
+    },
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+]
+---------------
+app-routing.module.ts file contain on[
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { BrandComponent } from './components/brand/brand.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ProductsComponent } from './components/products/products.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { AuthGuard } from './auth.guard';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { MainCategoriesComponent } from './components/main-categories/main-categories.component';
+import { CategoryDetailsComponent } from './components/category-details/category-details.component';
+import { BrandDetailsComponent } from './components/brand-details/brand-details.component';
+
+const routes: Routes = [
+  {path:'', redirectTo:'home', pathMatch:'full'},
+  {path:'home',
+  // canActivate:[AuthGuard],
+   component:HomeComponent },
+  {path:'about',
+  // canActivate:[AuthGuard], 
+  component:AboutComponent},
+  {path:'brand',
+  // canActivate:[AuthGuard], 
+  component:BrandComponent},
+  {path:'brandDetails/:id',
+  // canActivate:[AuthGuard], 
+  component:BrandDetailsComponent},
+  {path:'categories',
+  // canActivate:[AuthGuard], 
+  component:CategoriesComponent},
+  {path:'MainCategories',
+  // canActivate:[AuthGuard],
+   component:MainCategoriesComponent},
+  {path:'categoryDetails/:id',
+  // canActivate:[AuthGuard], 
+  component:CategoryDetailsComponent},
+  {path:'products',
+  // canActivate:[AuthGuard], 
+  component:ProductsComponent},
+  {path:'productsDetails/:id',
+  // canActivate:[AuthGuard], 
+  component:ProductDetailsComponent},
+  {path:'login', component:SignInComponent},
+  {path:'signup', component:SignUpComponent},
+  {path:'checkout/:cartId',
+  // canActivate:[AuthGuard],
+   component:CheckoutComponent},
+  {path:'allorders',
+  // canActivate:[AuthGuard],
+   component:OrdersComponent},
+  {path:'setting',
+  // canActivate:[AuthGuard],
+   loadChildren:()=>import('./setting/setting.module').then(s=>s.SettingModule)},
+  {path:'cart', loadChildren:()=>import('./cart/cart.module').then(c => c.CartModule)},
+  {path:'wishlist' , 
+  // canActivate:[AuthGuard],
+  loadChildren:()=>import('./wishlist/wishlist.module').then(w=>w.WishlistModule)},
+  {path:'**', component:NotFoundComponent}
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+]
+---------------
+auth.guard.ts file contain on[
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from './core/services/auth.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+  constructor(private _AuthService: AuthService, private _router: Router) {
+
+}
+canActivate(
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+
+  if(localStorage.getItem("userToken") != null){
+    return true;
+  }
+  else{
+    this._router.navigate(['/login']);
+    return false;
+  }
+}
+}
+
+]
+----------------
+cart.ts file contain on[
+export interface Cart {
+  numOfCartItems:number,
+  data:Data
+}
+
+interface Data{
+  totalCartPrice:number,
+  _id:string,
+  products:Products[]
+}
+
+interface Products
+{
+  count:number,
+  price:number,
+  product:Product
+}
+interface Product
+{
+  id:string,
+  title:string
+  imageCover:string
+
+}
+
+]
+------------------
+concat.pipe.ts file contain on[
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'concat'
+})
+export class ConcatPipe implements PipeTransform {
+
+  transform(value: Number): string {
+    return "total: " + value;
+  }
+
+}
+
+]
+----------------
+http-interceptor.interceptor.ts file contain on[
+import { Injectable } from '@angular/core';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor
+} from '@angular/common/http';
+import { Observable, finalize } from 'rxjs';
+import { LoaderService } from './core/services/loader.service';
+
+@Injectable()
+export class HttpInterceptorInterceptor implements HttpInterceptor {
+
+  constructor(private loaderService: LoaderService) {}
+
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    console.log(request)
+    this.loaderService.show();
+   let newReq= request.clone({
+      headers:request.headers.set('token',`${localStorage.getItem("userToken")}`)
+    })
+    return next.handle(newReq).pipe(
+      finalize(() => this.loaderService.hide()),
+);
+
+  }
+}
+
+]
+---------------
+search.pipe.ts file contain on[
+import { Pipe, PipeTransform } from '@angular/core';
+import { Product } from './core/interface/product';
+
+@Pipe({
+  name: 'search'
+})
+export class SearchPipe implements PipeTransform {
+
+  transform(products: Product[], term: string): Product[] {
+    return products.filter((product)=>product.title.toLowerCase().includes(term.toLowerCase()));
+  }
+
+}
+
+]
+----------------------------------
+Cart:
+-------
+1.cart-page.component.html file contain on [<div class="container py-5 mt-5">
+  <div class="bg-main-light p-5 shadow rounded-4" >
+      <h3 class="text-center">Cart Shop </h3>
+<div *ngIf="cartDetails?.data">
+
+     <div class="d-flex align-items-center justify-content-between mt-3">
+         <h6>Total Price : <span class="text-main">{{cartDetails.data.totalCartPrice}}</span></h6>
+         <button class="btn btn-outline-danger" (click)="clearCart()">
+          <i class="fa-solid fa-trash"></i>
+          Clear Cart
+         </button>
+
+     </div>
+
+     <div class="row d-flex my-3 border-bottom p-2 align-items-center" *ngFor="let product of cartDetails.data.products | filterCart">
+        <div class="col-md-1">
+            <img [src]="product.product.imageCover" alt="" class="w-100">
+        </div>
+        <div class="col-md-11">
+          <div class=" d-flex justify-content-between">
+          <div>
+              <h5 class="small">{{product.product.title}}</h5>
+              <h6 class="text-main">Price : {{product.price}} EGP</h6>
+              <button class="btn btn-sm p-0 m-0 text-danger" (click)="removeItem(product.product.id)">
+                <i class="fa-solid fa-trash"></i>
+                Remove
+              </button>
+          </div>
+          <div>
+            <button class="btn btn-count" (click)="updateCart(product.product.id ,product.count + 1)"> + </button>
+            <span class="mx-3">{{product.count}}</span>
+            <button  class="btn btn-count" (click)="updateCart(product.product.id, product.count - 1)"> - </button>
+          </div>
+          </div>
+        </div>
+     </div>
+
+     <button class="btn main-btn m-0">
+      <a [routerLink]="['/checkout/',cartDetails.data._id]" class="text-white">Online Payment
+        <img src="./assets/images/visa.svg" style="width: 40px;" alt="">
+       </a>
+   </button>
+   </div>
+  </div>
+</div>
+
+<section class="border rounded  p-3 mx-auto w-50 mb-5">
+  <button class="btn main-btn  text-white w-100" routerLink="/allorders">My Orders</button>
+</section>
+]
+		----------
+2.cart-page.component.ts file contain on [
+import { Component, OnInit } from '@angular/core';
+import { CartService } from '../cart.service';
+import { Cart } from 'src/app/cart';
+
+
+@Component({
+  selector: 'app-cart-page',
+  templateUrl: './cart-page.component.html',
+  styleUrls: ['./cart-page.component.css']
+})
+export class CartPageComponent implements OnInit {
+  cartDetails: Cart ={} as Cart
+ constructor(private _cartService:CartService){}
+  ngOnInit(): void {
+   this.getAllCart()
+  }
+
+ getAllCart(){
+  this._cartService.getCart().subscribe({
+    next:(res)=>{
+        this.cartDetails=res
+        console.log(res)
+      },
+      error:(err)=>{
+        console.log(err)
+      }
+
+  })
+ }
+ updateCart(id:string, count:number){
+   this._cartService.updateCart(id,count).subscribe({
+    next:(res)=>{
+      this.cartDetails=res
+      console.log(res)
+    },
+    error:(err)=>{
+      console.log(err)
+    }
+   })
+ }
+ removeItem(id:string){
+  this._cartService.removeCart(id).subscribe({
+    next:(res)=>{
+      this.cartDetails= res
+      this._cartService.numOfCartItems.next(res.numOfCartItems)
+    },
+    error:(err)=>{
+      console.log(err.error.message)
+    }
+  })
+ }
+ clearCart(){
+  this._cartService.clearCart().subscribe({
+    next:(res)=>{
+        this.cartDetails= res
+        this._cartService.numOfCartItems.next(0);
+    },
+    error:(err)=>{
+      console.log(err)
+    }
+  })
+ }
+}
+
+]
+		-----------
+3.cart.service file contain on [
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CartService {
+
+  token:string | null ;
+  numOfCartItems:BehaviorSubject<number> =new BehaviorSubject(0);
+  cartId:BehaviorSubject<string> =new BehaviorSubject("");
+
+  constructor(private _HttpClient:HttpClient) {
+    this.token= localStorage.getItem("userToken");
+    this.getCart().subscribe({
+      next:(res)=>{
+          this.numOfCartItems.next(res.numOfCartItems)
+          this.cartId.next(res.data.id)
+      },
+      error:(err)=>{
+        console.log(err)
+      }
+    })
+
+   }
+  addToCart(productId:String) : Observable<any>{
+   return this._HttpClient.post(`https://ecommerce.routemisr.com/api/v1/cart`,
+   { productId:productId},
+   {
+    headers:{
+      token: `${this.token}`
+    }
+   }
+   );
+  }
+  getCart() : Observable<any>{
+    return this._HttpClient.get(`https://ecommerce.routemisr.com/api/v1/cart`,
+    {
+     headers:{
+       token: `${this.token}`
+     }
+    }
+    );
+   }
+   updateCart(productId:string,count:number) : Observable<any>{
+    return this._HttpClient.put(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
+    { count:count},
+    {
+     headers:{
+       token: `${this.token}`
+     }
+    }
+    );
+   }
+   removeCart(productId:string) : Observable<any>{
+    return this._HttpClient.delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`,{
+     headers:{
+       token: `${this.token}`
+     }
+    }
+    );
+   }
+   clearCart() : Observable<any>{
+    return this._HttpClient.delete(`https://ecommerce.routemisr.com/api/v1/cart`,{
+     headers:{
+       token: `${this.token}`
+     }
+    }
+    );
+   }
+   onlinePayment(cartId:string, shippingAddress:any) : Observable<any>{
+    return this._HttpClient.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=https://nadaayman20.github.io/FreshCart-Ecommerce/`,
+      {shippingAddress:shippingAddress},
+      {headers:{
+       token: `${this.token}`
+      }
+    });
+  }
+}
+
+]
+		------------
+4.cart.module.ts file contain on [
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { CartRoutingModule } from './cart-routing.module';
+import { CartPageComponent } from './cart-page/cart-page.component';
+import { FilterCartPipe } from './filter-cart.pipe';
+
+
+@NgModule({
+  declarations: [
+    CartPageComponent,
+    FilterCartPipe
+  ],
+  imports: [
+    CommonModule,
+    CartRoutingModule
+  ]
+})
+export class CartModule { }
+
+]
+		------------
+5.cart-routing.module.ts file contain on [
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { CartPageComponent } from './cart-page/cart-page.component';
+
+const routes: Routes = [
+  {path:'',component:CartPageComponent }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class CartRoutingModule { }
+
+]
+		------------
+6.filter-cart.pipe.ts file contain on [
+import { Pipe, PipeTransform } from '@angular/core';
+
+
+@Pipe({
+  name: 'filterCart'
+})
+export class FilterCartPipe implements PipeTransform {
+
+  transform(value:any[], ...args: unknown[]): any[] {
+    return value.filter((Product)=>Product.count !=0 );
+  }
+
+}
+
+]
+----------------------------------------
+----------------------------------------
+WishList:
+-------
+wishlist.module.ts file contain [
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { WishlistPageComponent } from './wishlist-page/wishlist-page.component';
+
+const routes: Routes = [
+  {path:'', component:WishlistPageComponent}
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class WishlistRoutingModule { }
+
+]
+----------------------------------------
+wishlist.service.ts file contain [import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class WishlistService {
+  token:string | null ;
+  numOfWishlistItems:BehaviorSubject<number> =new BehaviorSubject(0);
+  constructor(private _httpClient: HttpClient) {
+    this.token= localStorage.getItem("userToken");
+    if(this.token !== null){
+      this.getWishlist().subscribe({
+        next:(res)=>{
+          this.numOfWishlistItems.next(res.count)
+        },
+        error:(err)=>{
+          console.log(err)
+        }
+      })
+
+
+     }
+  }
+
+  addToWishlist(productId:String) : Observable<any>{
+    return this._httpClient.post(`https://ecommerce.routemisr.com/api/v1/wishlist`,
+    { productId:productId},
+    {
+     headers:{
+       token: `${this.token}`
+     }
+    }
+    );
+   }
+
+   removeItem(productId:string) : Observable<any>{
+    return this._httpClient.delete(`https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`,{
+     headers:{
+       token: `${this.token}`
+     }
+    }
+    );
+   }
+
+   getWishlist() : Observable<any>{
+    return this._httpClient.get(`https://ecommerce.routemisr.com/api/v1/wishlist`,
+    {
+     headers:{
+       token: `${this.token}`
+     }
+    }
+    );
+   }
+}
+]
+----------------------------------------
+wishlist-routing.module.ts file contain [import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { WishlistPageComponent } from './wishlist-page/wishlist-page.component';
+
+const routes: Routes = [
+  {path:'', component:WishlistPageComponent}
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class WishlistRoutingModule { }
+]
+----------------------------------------
+wishlist-page.component.html file contain [<section class="container" *ngIf="whishList.length; else whish">
+  <div
+    class="row row-cols-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-6 justify-content-center py-5 mt-5"
+  >
+    <div class="col" *ngFor="let item of whishList">
+      <div class="product p-2">
+        <div class="ptorcut-area position-relative">
+          <span (click)="removeFromWhish(item._id)" role="button" class="icon position-absolute top-0 end-0">
+            <i class="fa-solid fa-heart-crack text-main fs-3"></i>
+          </span>
+          <header role="button" [routerLink]="['/productsDetails', item._id]">
+            <img
+              loading="lazy"
+              class="w-100"
+              [src]="item.imageCover"
+              [alt]="item.title"
+            />
+
+            <p class="text-main">{{item.category.name}}</p>
+            <h2 class="h6">{{item.title.split(" ").splice(0,2).join(" ")}}</h2>
+          </header>
+
+          <div class="d-flex justify-content-between">
+            <span>total: {{item.price}} EGP</span>
+            <div>
+              <i class="fa fa-star rating-color"></i>
+              {{item.ratingsAverage}}
+            </div>
+        </div>
+        </div>
+        <button (click)="addToCart(item._id)" class="add-btn main-btn w-100 my-2">
+          + Add To Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #whish>
+<div class="py-5 mt-5">
+  <h3 class="text-center my-3 display-5">Your WhishList Is Empty...</h3>
+</div>
+</ng-template>
+]
+----------------------------------------
+wishlist-page.component.ts file content [import { Component, OnInit } from '@angular/core';
+import { WishlistService } from '../wishlist.service';
+import { CartService } from 'src/app/cart/cart.service';
+
+@Component({
+  selector: 'app-wishlist-page',
+  templateUrl: './wishlist-page.component.html',
+  styleUrls: ['./wishlist-page.component.css']
+})
+export class WishlistPageComponent implements OnInit{
+  constructor(private _wishlistService:WishlistService, private _cartService:CartService){}
+
+  whishList: any[] = [];
+  ngOnInit(): void {
+    this.getAllWishlist()
+
+   }
+
+  getAllWishlist(){
+   this._wishlistService.getWishlist().subscribe({
+     next:(res)=>{
+      this.whishList=res.data
+         this._wishlistService.numOfWishlistItems.next(res.data.length);
+       },
+       error:(err)=>{
+        console.log(err)
+       }
+
+   })
+  }
+  addToCart(id:string){
+    this._cartService.addToCart(id).subscribe({
+      next:(res)=>{
+       this._cartService.numOfCartItems.next(res.numOfCartItems)
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    })
+  }
+  removeFromWhish(id:string){
+     this._wishlistService.removeItem(id).subscribe({
+      next:(res)=>{
+        this.whishList = this.whishList.filter((item) =>
+        res.data.includes(item._id)
+      );
+
+      // console.log(this.whishList);
+      this._wishlistService.numOfWishlistItems.next(this.whishList.length);
+      }
+
+     })
+  }
+}
+]
+----------------------------------------
+
+Setting-folder:
+---------------
+setting-routing.module.ts file contain [import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ReseatPasswordComponent } from './reseat-password/reseat-password.component';
+
+const routes: Routes = [
+  {path:'', redirectTo:'reseat', pathMatch:'full'},
+  {path:"change", component:ChangePasswordComponent},
+  {path:"reseat", component:ReseatPasswordComponent},
+
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class SettingRoutingModule { }
+]
+----------------------------------------
+setting.module.ts file contain [import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { SettingRoutingModule } from './setting-routing.module';
+import { ReseatPasswordComponent } from './reseat-password/reseat-password.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
+@NgModule({
+  declarations: [
+    ReseatPasswordComponent,
+    ChangePasswordComponent
+  ],
+  imports: [
+    CommonModule,
+    SettingRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
+  ]
+})
+export class SettingModule { }
+]
+----------------------------------------
+reseat-password.component.ts contain [import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
+
+@Component({
+  selector: 'app-reseat-password',
+  templateUrl: './reseat-password.component.html',
+  styleUrls: ['./reseat-password.component.css']
+})
+export class ReseatPasswordComponent implements OnInit{
+  forgetPassword !:FormGroup
+  verifyCode!: FormGroup;
+  resetPassword!: FormGroup;
+  first: boolean = true;
+  seconde: boolean = false;
+  done: boolean = false;
+  isloader=false;
+
+  @ViewChild('form1') form1!: ElementRef;
+  @ViewChild('form2') form2!: ElementRef;
+  @ViewChild('form3') form3!: ElementRef;
+  errMsg:any;
+  email: string = '';
+
+  constructor( private _authServices: AuthService , private router:Router){}
+  ngOnInit(): void {
+    this.forgetPassword = new FormGroup({
+      email:new FormControl(null, [Validators.required, Validators.email]),
+    })
+
+    this.verifyCode = new FormGroup({
+      resetCode: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^\d{6}$/),
+      ]),
+    });
+
+    this.resetPassword = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      newPassword: new FormControl('', [ Validators.required, Validators.pattern(/^\w{6,}$/),
+      ]),
+    });
+  }
+ForgetPassword(form:FormGroup){
+  this.isloader = true;
+  if (form.valid) {
+    console.log(form.value);
+    this._authServices.ForgotPassword(form.value).subscribe({
+      next: (response) => {
+        console.log(response);
+        if (response.statusMsg === 'success') {
+          this.errMsg = response.message;
+          this.isloader = false;
+          form.disable();
+
+          this.email = form.get('email')?.value;
+          this.first = false;
+          this.seconde = true;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.errMsg = err.error.message;
+        this.isloader = false;
+      },
+    });
+  }
+}
+
+handleVerifyResetCode(verifyCode:FormGroup): void {
+  this.isloader = true;
+  if (verifyCode.valid) {
+    console.log(verifyCode.value);
+    this._authServices.VerifyResetCode(verifyCode.value).subscribe({
+      next: (res) => {
+        console.log(res);
+        if (res.status === 'Success') {
+          this.errMsg = res.status;
+          this.isloader = false;
+          this.verifyCode.disable();
+          this.seconde = false;
+          this.done = true;
+          this.resetPassword.get('email')?.setValue(this.email);
+          this.resetPassword.get('email')?.disable();
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.errMsg = err.error.message;
+        this.isloader = false;
+      },
+    });
+  }
+}
+handleResetPassword(resetPassword:FormGroup): void {
+  this.isloader = true;
+  if (resetPassword.valid) {
+    console.log(resetPassword.value);
+    const userData = {
+      email: this.email,
+      newPassword: resetPassword.get('newPassword')?.value,
+    };
+    this._authServices.ResetPassword(userData).subscribe({
+      next: (res) => {
+        console.log(res);
+        if (res?.token) {
+          this.errMsg = res.message;
+          localStorage.setItem('_token', res?.token);
+          this._authServices.getUserData();
+          this.isloader = false;
+          resetPassword.disable();
+          setTimeout(() => {
+            this.router.navigate(['/home']);
+          }, 1000);
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.errMsg = err.error.message;
+        this.isloader = false;
+      },
+    });
+  }
+}
+}
+]
+----------------------------------------
+reseat-password.component.html file contain[<div class="container py-5 mt-5">
+  <div class="bg-main-light py-4 px-3 my-4 shadow rounded-4 mx-auto">
+  <h3 class="mb-3 text-center">Forget Password</h3>
+
+  <form  #form1 *ngIf="first" [formGroup]="forgetPassword" (ngSubmit)="ForgetPassword(forgetPassword)">
+    <div class="mb-2">
+       <label for="email" class="mb-2">Email</label>
+       <input type="email" id="email" class="form-control" formControlName="email" placeholder="Enter Your Email">
+       <div class="alert alert-danger" *ngIf="forgetPassword.get('email')?.errors && forgetPassword.get('email')?.touched">
+         <p class="mb-0" *ngIf="forgetPassword.get('email')?.getError('required') ">This field is required</p>
+         <p class="mb-0" *ngIf="forgetPassword.get('email')?.getError('email')">Email is not valid</p>
+    </div>
+    </div>
+    <button class="btn bg-main text-white ms-auto d-flex" *ngIf="isloader">
+     <i  class="fa fa-spinner fa-spin"></i>
+    </button>
+    <button class="btn bg-main text-white my-3 w-100"  *ngIf="!isloader" [disabled]="forgetPassword.invalid">Next</button>
+
+    <div class="alert alert-danger w-50 mx-auto text-center my-3" *ngIf="errMsg">
+      {{errMsg}}
+   </div>
+ </form>
+
+  <form  #form2 *ngIf="seconde" [formGroup]="verifyCode" (ngSubmit)="handleVerifyResetCode(verifyCode)">
+    <div class="mb-2">
+      <label for="resetCode" class="mb-2">Reset Code:</label>
+      <input
+        type="text"formControlName="resetCode" class="form-control" placeholder="Your Reset Code..."/>
+       <div class="alert alert-danger" *ngIf="verifyCode.get('resetCode')?.errors && verifyCode.get('resetCode')?.touched">
+         <p class="mb-0" *ngIf="verifyCode.get('resetCode')?.getError('required') "> resetCode is required</p>
+         <p class="mb-0" *ngIf="verifyCode.get('resetCode')?.getError('pattern')">must be at 6 chars</p>
+    </div>
+    </div>
+    <button class="btn bg-main text-white ms-auto d-flex" *ngIf="isloader">
+     <i  class="fa fa-spinner fa-spin"></i>
+    </button>
+    <button class="btn bg-main text-white my-3 w-100"  *ngIf="!isloader" [disabled]="verifyCode.invalid">Next</button>
+    <div class="alert alert-danger w-50 mx-auto text-center my-3" *ngIf="errMsg">
+      {{errMsg}}
+
+    </div>
+ </form>
+
+
+  <form  #form3 *ngIf="done" [formGroup]="resetPassword" (ngSubmit)="handleResetPassword(resetPassword)">
+    <div class="mb-2">
+      <label for="email" class="mb-2">Email:</label>
+      <input
+        type="email" formControlName="email" class="form-control" placeholder="Your Email..." />
+       <div class="alert alert-danger" *ngIf="resetPassword.get('email')?.errors && resetPassword.get('email')?.touched">
+         <p class="mb-0" *ngIf="resetPassword.get('email')?.getError('required') "> Email is required</p>
+         <p class="mb-0" *ngIf="resetPassword.get('resetCode')?.getError('email')">  Email InValid Format</p>
+    </div>
+    </div>
+    <div class="mb-2">
+      <label for="newPass" class="mb-2">newPassword:</label>
+      <input
+        type="password" formControlName="newPassword" class="form-control" for="newPass" placeholder="Your New Password..." />
+       <div class="alert alert-danger" *ngIf="verifyCode.get('newPassword')?.errors && resetPassword.get('newPassword')?.touched">
+         <p class="mb-0" *ngIf="resetPassword.get('email')?.getError('required') ">  New Password Is Required</p>
+         <p class="mb-0" *ngIf="resetPassword.get('resetCode')?.getError('pattern')">  Must be at least 6 chars</p>
+    </div>
+    </div>
+    <button class="btn bg-main text-white ms-auto d-flex" *ngIf="isloader">
+     <i  class="fa fa-spinner fa-spin"></i>
+    </button>
+    <button class="btn bg-main text-white my-3 w-100"  *ngIf="!isloader" [disabled]="verifyCode.invalid">Next</button>
+
+    <div class="alert alert-danger w-50 mx-auto text-center my-3" *ngIf="errMsg">
+      {{errMsg}}
+  </div>
+  </form>
+
+
+
+
+</div>
+</div>
+
+] 
+----------------------------------------
+change-password.component.ts file contain [import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControlOptions, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
+
+@Component({
+  selector: 'app-change-password',
+  templateUrl: './change-password.component.html',
+  styleUrls: ['./change-password.component.css']
+})
+export class ChangePasswordComponent implements OnInit{
+  passwordShow: boolean = false;
+  curentPasswordShow: boolean = false;
+  rePasswordShow: boolean = false;
+  updateForm!: FormGroup;
+  errMsg: string = '';
+  isLoading: boolean = false;
+
+  constructor(    private _AuthService: AuthService, private _fb: FormBuilder,private _Router: Router){
+
+  }
+  ngOnInit(): void {
+    this.updateForm = this._fb.group(
+      {
+        currentPassword: [
+          '',
+          [Validators.required, Validators.pattern(/^\w{6,}$/)],
+        ],
+        password: ['', [Validators.required, Validators.pattern(/^\w{6,}$/)]],
+        rePassword: [''],
+      },
+      { validator: [this.checkPassword] } as FormControlOptions
+    );
+  }
+  checkPassword(group: AbstractControl): void {
+    const password = group.get('password');
+    const rePassword = group.get('rePassword');
+
+    if (rePassword?.value === '') {
+      rePassword?.setErrors({ required: true });
+    } else if (rePassword?.value !== password?.value) {
+      rePassword?.setErrors({ mismatch: true });
+    }
+  }
+  handleUpdate(): void {
+    this.isLoading = true;
+    if (this.updateForm.valid) {
+      this._AuthService.updatePassword(this.updateForm.value).subscribe({
+        next: (response) => {
+          if (response.message === 'success') {
+            this.isLoading = false;
+            console.log(response);
+            localStorage.setItem('_token', response.token);
+            this.updateForm.reset();
+            this.errMsg = response.message;
+          }
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.errMsg = err.error.message;
+        },
+      });
+    }
+  }
+
+}
+]
+----------------------------------------
+change-password.component.html file contain [<div class="py-5 mt-5">
+  <section class="bg-main-light w-75 mx-auto rounded shadow p-3">
+    <h1 class="h4 text-center">Update User Password</h1>
+
+    <form
+      class="vstack gap-3 w-75 mx-auto"
+      [formGroup]="updateForm"
+      (ngSubmit)="handleUpdate()"
+    >
+      <div class="form-item">
+        <label for="currentPassword">Current Password:</label>
+        <div class="position-relative">
+          <input
+            #cupass
+            formControlName="currentPassword"
+            id="currentPassword"
+            type="password"
+            class="form-control"
+            placeholder="Your Current Password...."
+          />
+          <span
+            (click)="
+              curentPasswordShow = true;
+              curentPasswordShow == true
+                ? (cupass.type = 'text')
+                : (cupass.type = 'password')
+            "
+            [ngClass]="{
+              'd-none': curentPasswordShow
+            }"
+            role="button"
+            class="position-absolute top-50 end-0 translate-middle-y me-2"
+          >
+            <i class="fas fa-eye"></i>
+          </span>
+
+          <span
+            (click)="
+              curentPasswordShow = false;
+              curentPasswordShow == false
+                ? (cupass.type = 'password')
+                : (cupass.type = 'text')
+            "
+            [ngClass]="{
+              'd-none': !curentPasswordShow
+            }"
+            role="button"
+            class="position-absolute top-50 end-0 translate-middle-y me-2"
+          >
+            <i class="fas fa-eye-slash"></i>
+          </span>
+        </div>
+
+        <ng-container *ngIf="updateForm.get('currentPassword')?.errors && updateForm.get('currentPassword')?.touched"  >
+          <p
+            class="alert alert-danger w-50 mx-auto p-1 mb-0"
+            *ngIf="updateForm.get('currentPassword')?.getError('required')"
+          >
+            Curent Password Is Required
+          </p>
+          <p
+            class="alert alert-danger w-50 mx-auto p-1 mb-0"
+            *ngIf="updateForm.get('currentPassword')?.getError('pattern')"
+          >
+            Must be at least 6 chars
+          </p>
+        </ng-container>
+      </div>
+
+      <div class="form-item">
+        <label for="password">Password:</label>
+
+        <div class="position-relative">
+          <input
+            #pass
+            formControlName="password"
+            id="password"
+            type="password"
+            class="form-control"
+            placeholder="Your Password...."
+          />
+          <span
+            (click)="
+              passwordShow = true;
+              passwordShow == true
+                ? (pass.type = 'text')
+                : (pass.type = 'password')
+            "
+            [ngClass]="{
+              'd-none': passwordShow
+            }"
+            role="button"
+            class="position-absolute top-50 end-0 translate-middle-y me-2"
+          >
+            <i class="fas fa-eye"></i>
+          </span>
+
+          <span
+            (click)="
+              passwordShow = false;
+              passwordShow == false
+                ? (pass.type = 'password')
+                : (pass.type = 'text')
+            "
+            [ngClass]="{
+              'd-none': !passwordShow
+            }"
+            role="button"
+            class="position-absolute top-50 end-0 translate-middle-y me-2"
+          >
+            <i class="fas fa-eye-slash"></i>
+          </span>
+        </div>
+        <ng-container *ngIf="updateForm.get('password')?.errors && updateForm.get('password')?.touched"  >
+          <p
+            class="alert alert-danger w-50 mx-auto p-1 mb-0"
+            *ngIf="updateForm.get('password')?.getError('required')"
+          >
+          Password Is Required
+          </p>
+          <p
+            class="alert alert-danger w-50 mx-auto p-1 mb-0"
+            *ngIf="updateForm.get('password')?.getError('pattern')"
+          >
+            Must be at least 6 chars
+          </p>
+        </ng-container>
+      </div>
+
+      <div class="form-item">
+        <label for="rePassword">RePassword:</label>
+        <div class="position-relative">
+          <input
+            #repass
+            formControlName="rePassword"
+            id="rePassword"
+            type="Password"
+            class="form-control"
+            placeholder="Confirm Password...."
+          />
+
+          <span
+            (click)="
+              rePasswordShow = true;
+              rePasswordShow == true
+                ? (repass.type = 'text')
+                : (repass.type = 'password')
+            "
+            [ngClass]="{
+              'd-none': rePasswordShow
+            }"
+            role="button"
+            class="position-absolute top-50 end-0 translate-middle-y me-2"
+          >
+            <i class="fas fa-eye"></i>
+          </span>
+
+          <span
+            (click)="
+              rePasswordShow = false;
+              rePasswordShow == false
+                ? (repass.type = 'password')
+                : (repass.type = 'text')
+            "
+            [ngClass]="{
+              'd-none': !rePasswordShow
+            }"
+            role="button"
+            class="position-absolute top-50 end-0 translate-middle-y me-2"
+          >
+            <i class="fas fa-eye-slash"></i>
+          </span>
+        </div>
+
+        <ng-container *ngIf="updateForm.get('rePassword')?.errors && updateForm.get('rePassword')?.touched"  >
+          <p
+            class="alert alert-danger w-50 mx-auto p-1 mb-0"
+            *ngIf="updateForm.get('rePassword')?.getError('required')"
+          >
+          RePassword Is Required
+          </p>
+          <p
+            class="alert alert-danger w-50 mx-auto p-1 mb-0"
+            *ngIf="updateForm.get('rePassword')?.getError('pattern')"
+          >
+            Must be at least 6 chars
+          </p>
+        </ng-container>
+
+      </div>
+
+      <button
+        *ngIf="!isLoading"
+        type="submit"
+        [disabled]="updateForm.invalid"
+        class="main-btn ms-auto"
+      >
+        <span>Change</span>
+      </button>
+
+      <button *ngIf="isLoading" type="button" disabled class="main-btn ms-auto">
+        <span> <i class="fas fa-spinner fa-spin"></i> </span>
+      </button>
+
+      <p
+        class="alert alert-danger text-center w-50 mx-auto mb-0 p-1 mt-3"
+        *ngIf="errMsg"
+      >
+        {{ errMsg }}
+      </p>
+    </form>
+  </section>
+
+</div>
+]
+----------------------------------------
+Core-folder:
+------------
+1.interfaces:
+-----------
+brand.ts file contain on [export interface Brand {
+  _id:string,
+  image:string,
+  name:string
+}
+]
+----------------------------------------
+category.ts file contain on [export interface Category {
+  image:string,
+  name:string
+}
+]
+----------------------------------------
+product.ts file contain on [export interface Product {
+  _id:string,
+  imageCover:string,
+  title:string,
+  price:Number,
+  category: Category,
+  ratingsAverage:Number,
+  description?:string,
+  images?:string[]
+}
+
+interface Category{
+  name:string
+}
+]
+----------------------------------------
+2.services:
+-----------
+auth.service.ts file contain [import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import  JwtDecode  from 'jwt-decode';
+import { Router } from '@angular/router';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  UserData:BehaviorSubject<any>= new BehaviorSubject("");
+  token:string | null ;
+  constructor(private _httpClient:HttpClient , private router:Router) {
+    this.token= localStorage.getItem("userToken");
+    if(this.token != null){
+      this.getUserData()
+    }
+   }
+
+  getUserData(){
+    let encodedToken = JSON.stringify(localStorage.getItem('userToken'));
+    let encoded= JwtDecode(encodedToken);
+    console.log(encoded)
+    this.UserData.next(encoded);
+  }
+
+  register(data:any): Observable<any>{
+    return this._httpClient.post('https://ecommerce.routemisr.com/api/v1/auth/signup',data)
+  }
+  login(data:any): Observable<any>{
+    return this._httpClient.post('https://ecommerce.routemisr.com/api/v1/auth/signin',data)
+  }
+  ForgotPassword(data:any): Observable<any>{
+    return this._httpClient.post('https://ecommerce.routemisr.com/api/v1/auth/forgotPasswords',data)
+  }
+  VerifyResetCode(data:any): Observable<any>{
+    return this._httpClient.post('https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode',data)
+  }
+  ResetPassword(data:any): Observable<any>{
+    return this._httpClient.put('https://ecommerce.routemisr.com/api/v1/auth/resetPassword',data)
+  }
+  updatePassword(data:any): Observable<any>{
+    return this._httpClient.put('https://ecommerce.routemisr.com/api/v1/users/changeMyPassword',data,
+    {
+      headers:{
+        token: `${this.token}`
+      }
+     }
+    )
+  }
+  logOut(){
+    localStorage.removeItem("userToken");
+    this.UserData.next(null);
+    this.router.navigate(['/login'])
+  }
+
+}
+]
+----------------------------------------
+loader.service.ts file content [import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class LoaderService {
+
+  isLoading = new Subject<boolean>();
+
+  constructor() {
+  }
+
+  show() {
+     this.isLoading.next(true);
+  }
+
+  hide() {
+     this.isLoading.next(false);
+  }
+}
+]
+----------------------------------------
+products.service.ts file content [import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductsService {
+
+  constructor(private _httpClient:HttpClient) { }
+  getProducts(pageNum: number = 1): Observable <any>{
+    return this._httpClient.get(`https://ecommerce.routemisr.com/api/v1/products?page=${pageNum}`)
+  }
+  getProductsById(id:String): Observable <any>{
+    return this._httpClient.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`)
+  }
+  getCategories(): Observable <any>{
+    return this._httpClient.get('https://ecommerce.routemisr.com/api/v1/categories')
+  }
+  getCategoriesById(id:string): Observable <any>{
+    return this._httpClient.get(`https://ecommerce.routemisr.com/api/v1/categories/${id}`)
+  }
+  getSubCategory(id:string): Observable <any>{
+    return this._httpClient.get(`https://ecommerce.routemisr.com/api/v1/categories/${id}/subcategories`)
+  }
+  getBrands(): Observable <any>{
+    return this._httpClient.get('https://ecommerce.routemisr.com/api/v1/brands')
+  }
+  getBrandsById(id:string): Observable <any>{
+    return this._httpClient.get(`https://ecommerce.routemisr.com/api/v1/brands/${id}`)
+  }
+  getAllOrdes(): Observable <any>{
+    return this._httpClient.get('https://ecommerce.routemisr.com/api/v1/orders')
+  }
+  getUserOrdes(userId:string): Observable <any>{
+    return this._httpClient.get(`https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`)
+  }
+
+}
+]
+=================================================
+
+Components:
+-------------
+about.component.html file contain [<p>about works!</p>
+]
+----------------------------------------
+about.file contain [import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-about',
+  templateUrl: './about.component.html',
+  styleUrls: ['./about.component.css']
+})
+export class AboutComponent {
+
+}
+]
+----------------------------------------
+brand.component.html file contain [<div class="container py-5 mt-5">
+   <div class="row g-4">
+      <div class="col-lg-3 col-md-6" *ngFor="let brand of allBrands">
+          <div class="card p-3 " role="button" [routerLink]="['/brandDetails/', brand._id]">
+            <div class="image text-center">
+              <img src="{{brand.image}}" alt="">
+           </div>
+             <div class="text">
+                <h5 class="text-main">{{brand.name}}</h5>
+             </div>
+          </div>
+      </div>
+   </div>
+</div>
+]
+----------------------------------------
+brand.component.ts file contain [import { Component, OnInit } from '@angular/core';
+import { Brand } from 'src/app/core/interface/brand';
+import { ProductsService } from 'src/app/core/services/products.service';
+
+@Component({
+  selector: 'app-brand',
+  templateUrl: './brand.component.html',
+  styleUrls: ['./brand.component.css']
+})
+export class BrandComponent implements OnInit{
+  allBrands: Brand []=[]
+  constructor(private _productsService:ProductsService){}
+  getAllBrand(){
+    this._productsService.getBrands().subscribe({
+      next:(res)=>{
+        this.allBrands=res.data
+        console.log(this.allBrands)
+      },
+      error:(err)=>{
+          console.log(err)
+      }
+    })
+  }
+  ngOnInit(): void {
+this.getAllBrand()
+  }
+
+}
+]
+----------------------------------------
+brand-details.component.html file contain [<div class="container py-5 mt-5">
+  <div class="bg-main-light p-5 shadow rounded-4">
+       <div class="row d-flex align-items-center">
+          <div class="col-lg-4">
+            <div class="image">
+                <img [src]="brandDetail.image" alt="" class="w-100">
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="data">
+              <h3>{{brandDetail.name}}</h3>
+            </div>
+          </div>
+       </div>
+  </div>
+</div>
+]
+----------------------------------------
+brand-details.component.ts file contain [import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Brand } from 'src/app/core/interface/brand';
+import { ProductsService } from 'src/app/core/services/products.service';
+
+@Component({
+  selector: 'app-brand-details',
+  templateUrl: './brand-details.component.html',
+  styleUrls: ['./brand-details.component.css']
+})
+export class BrandDetailsComponent implements OnInit{
+  brandId:string ="";
+  brandDetail: Brand ={} as Brand
+  constructor(private _productsService:ProductsService , private _activatedRoute:ActivatedRoute){
+    this._activatedRoute.paramMap.subscribe((res:any)=>{
+     this.brandId= res.params.id
+    })
+    this._productsService.getBrandsById(this.brandId).subscribe({
+      next:(res)=>{
+        this.brandDetail=res.data
+      },
+      error:(err)=>{
+        console.log(err)
+      }
+    })
+
+  }
+  ngOnInit(): void {
+
+  }
+
+}
+]
+----------------------------------------
+categories.component.html file contain [  <owl-carousel-o [options]="customOptions" >
+
+    <ng-container *ngFor="let slide of allCategories" >
+      <ng-template carouselSlide>
+        <img [src]="slide.image" style="height: 300px;" class="w-100" >
+        <h3 class="h6 my-2 text-main">{{slide.name}}</h3>
+      </ng-template>
+    </ng-container>
+
+  </owl-carousel-o>
+
+]
+----------------------------------------
+categories.component.ts file contain [import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ProductsService } from 'src/app/core/services/products.service';
+import { Category } from './../../core/interface/category';
+
+@Component({
+  selector: 'app-category-details',
+  templateUrl: './category-details.component.html',
+  styleUrls: ['./category-details.component.css']
+})
+export class CategoryDetailsComponent implements OnInit {
+  categorytId: string ="";
+  CategoryDetails:Category = {} as Category
+  subCategory: any
+  constructor(private _productsService: ProductsService, private _activatedRoute:ActivatedRoute){
+     this._activatedRoute.paramMap.subscribe((res:any)=>{
+      this.categorytId=res.params.id
+     })
+     this._productsService.getCategoriesById(this.categorytId).subscribe({
+      next:(res)=>{
+        this.CategoryDetails=res.data
+
+      },
+      error:(err)=>{
+        console.log(err)
+      }
+     })
+     this._productsService.getSubCategory(this.categorytId).subscribe({
+      next:(res)=>{
+     this. subCategory= res.data
+     console.log(this.subCategory)
+
+      },
+      error:(err)=>{
+        console.log(err)
+      }
+     })
+  }
+
+  ngOnInit(): void {
+
+  }
+
+}
+]
+----------------------------------------
+category-details.component.html file contain [<div class="container py-5 mt-5">
+  <div class="bg-main-light p-5 shadow rounded-4">
+       <div class="row d-flex align-items-center">
+          <div class="col-lg-4">
+            <div class="image">
+                <img [src]="CategoryDetails.image" alt="" class="w-100">
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="data">
+              <h3>{{CategoryDetails.name}}</h3>
+              <h4>Sub Categories:</h4>
+              <span
+                class="badge bg-secondary me-3"
+                *ngFor="let subCat of subCategory">
+                {{ subCat.name }}
+              </span>
+            </div>
+          </div>
+       </div>
+  </div>
+</div>
+]
+----------------------------------------
+category-details.component.ts file contain [import { Component } from '@angular/core';
+import { FormGroup,FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CartService } from 'src/app/cart/cart.service';
+@Component({
+  selector: 'app-checkout',
+  templateUrl: './checkout.component.html',
+  styleUrls: ['./checkout.component.css']
+})
+export class CheckoutComponent {
+  cartId:string="";
+sippingAddres:FormGroup = new FormGroup({
+  details : new FormControl(null,[Validators.required, Validators.minLength(5)]),
+  phone : new FormControl(null, [Validators.required]),
+  city : new FormControl(null, [Validators.required])
+})
+constructor(private _cartService:CartService, private router:Router, private _activatedRoute:ActivatedRoute){
+  this._activatedRoute.paramMap.subscribe((res:any)=>{
+    this.cartId=res.params.cartId
+  })
+}
+handelOnline(){
+ this._cartService.onlinePayment(this.cartId,this.sippingAddres.value).subscribe({
+  next:(res)=>{
+    if(res.status=="success"){
+      console.log(res.session.url)
+      window.location.href= res.session.url
+      this.router.navigate(['/allorders'])
+
+    }
+  }
+ })
+}
+}
+]
+----------------------------------------
+checkout.component.html file contain [<div class="container w-50 mx-auto py-5 my-5">
+  <div class="bg-main-light p-5 shadow rounded-4">
+   <form [formGroup]="sippingAddres" (ngSubmit)="handelOnline()">
+    <div class="mb-2">
+      <label for="details" class="mb-2">Details</label>
+      <input type="text" id="details" class="form-control" formControlName="details" placeholder="Enter Details">
+        <div class="alert alert-danger" *ngIf="sippingAddres.get('details')?.errors && sippingAddres.get('details')?.touched">
+          <p class="mb-0" *ngIf="sippingAddres.get('details')?.getError('required') ">This field is required</p>
+          <p class="mb-0" *ngIf="sippingAddres.get('details')?.getError('minlength')">min length is 5</p>
+      </div>
+   </div>
+    <div class="mb-2">
+      <label for="phone" class="mb-2">Phone</label>
+      <input type="text" id="phone" class="form-control" formControlName="phone" placeholder="Enter Phone">
+      <div class="alert alert-danger" *ngIf="sippingAddres.get('phone')?.errors && sippingAddres.get('phone')?.touched">
+        <p class="mb-0" *ngIf="sippingAddres.get('phone')?.getError('required') ">This field is required</p>
+    </div>
+   </div>
+    <div class="mb-4">
+      <label for="city" class="mb-2">City</label>
+      <input type="text" id="city" class="form-control" formControlName="city" placeholder="Enter City">
+      <div class="alert alert-danger" *ngIf="sippingAddres.get('city')?.errors && sippingAddres.get('city')?.touched">
+        <p class="mb-0" *ngIf="sippingAddres.get('city')?.getError('required') ">This field is required</p>
+    </div>
+   </div>
+   <button class="btn main-btn text-white w-100" [disabled]="sippingAddres.invalid">Pay</button>
+   </form>
+</div>
+</div>
+
+
+]
+----------------------------------------
+checkout.component.ts file contain [import { Component } from '@angular/core';
+import { FormGroup,FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CartService } from 'src/app/cart/cart.service';
+@Component({
+  selector: 'app-checkout',
+  templateUrl: './checkout.component.html',
+  styleUrls: ['./checkout.component.css']
+})
+export class CheckoutComponent {
+  cartId:string="";
+sippingAddres:FormGroup = new FormGroup({
+  details : new FormControl(null,[Validators.required, Validators.minLength(5)]),
+  phone : new FormControl(null, [Validators.required]),
+  city : new FormControl(null, [Validators.required])
+})
+constructor(private _cartService:CartService, private router:Router, private _activatedRoute:ActivatedRoute){
+  this._activatedRoute.paramMap.subscribe((res:any)=>{
+    this.cartId=res.params.cartId
+  })
+}
+handelOnline(){
+ this._cartService.onlinePayment(this.cartId,this.sippingAddres.value).subscribe({
+  next:(res)=>{
+    if(res.status=="success"){
+      console.log(res.session.url)
+      window.location.href= res.session.url
+      this.router.navigate(['/allorders'])
+
+    }
+  }
+ })
+}
+}
+]
+----------------------------------------
+featured-products.component.html file contain [<div class="container py-5">
+  <input type="text" [(ngModel)]="searchProduct" class="form-control w-75 m-auto my-5" placeholder="Search....">
+  <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+      <app-product-item [product]="product" *ngFor="let product of allProducts | search:searchProduct">
+
+      </app-product-item>
+  </div>
+</div>
+]
+----------------------------------------
+featured-products.component.ts file contain [import { Component, OnInit } from '@angular/core';
+import { ProductsService } from 'src/app/core/services/products.service';
+import { Product } from './../../core/interface/product';
+
+@Component({
+  selector: 'app-featured-products',
+  templateUrl: './featured-products.component.html',
+  styleUrls: ['./featured-products.component.css']
+})
+export class FeaturedProductsComponent implements OnInit{
+  allProducts: Product[] =[];
+  searchProduct: string ="";
+  constructor(private _productServices: ProductsService){}
+  getAllProducts(){
+    this._productServices.getProducts().subscribe({
+      next:(res)=>{
+         console.log(res)
+         this.allProducts= res.data;
+      }
+    })
+  }
+  ngOnInit(): void {
+   this.getAllProducts();
+  }
+
+}
+]
+----------------------------------------
+footer.component.html file contain [<section class="p-4 bg-main-light">
+  <div class="container-fluid">
+    <div class="title">
+      <h5>Get The FreshCart App</h5>
+      <p class=" text-secondary">
+        We Will Send You a Link,open it on Your Phone
+      </p>
+    </div>
+
+    <div class="footer-info mx-4">
+      <div class="form-item d-flex gap-4">
+        <input
+          type="text"
+          class="form-control flex-grow-1"
+          placeholder="Email..."
+        />
+        <button class="main-btn px-3 flex-shrink-0">Share App Link</button>
+      </div>
+
+      <hr class="border-secondary" />
+
+      <div class="copy-right">
+        <h6 class="text-center">&copy; 2023 Nada Ayman , All Rights Reserved</h6>
+      </div>
+    </div>
+  </div>
+</section>
+]
+----------------------------------------
+footer.component.ts file contain [import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-footer',
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.css']
+})
+export class FooterComponent {
+
+}
+]
+----------------------------------------
+orders.component.html file contain [<div class="py-5">
+  <section
+  *ngIf="ordersData.length; else oreder"
+  class="rounded shadow bg-main-light w-75 mx-auto p-3 allorders py-5 mt-5"
+>
+  <h1 class="text-center h4">All Orders</h1>
+
+  <div
+    class="row align-items-center border rounded m-2 p-2"
+    *ngFor="let row of ordersData; index as i"
+  >
+    <h3 class="h6">Order: {{ i + 1 }}</h3>
+    <div class="col-md-8">
+      <div *ngFor="let cartItem of row.cartItems" class="ps-5 mb-1">
+        <div class="product-item d-flex align-items-center gap-3">
+          <img
+            width="70"
+            [src]="cartItem.product.imageCover"
+            [alt]="cartItem.product.title"
+          />
+          <div class="product-info">
+            <h3 class="h6 small text-main">
+              {{ cartItem.product.title }}
+            </h3>
+
+            <span class="text-muted d-block"> Count:{{ cartItem.count }} </span>
+            <span class="text-muted d-block"> Price:{{ cartItem.price }} </span>
+          </div>
+        </div>
+
+        <hr class="border-warning mx-5" />
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="border border-dark rounded p-1">
+        <p class="mb-0">
+          <span> Is Delivered: </span>
+          <span
+            [class]="row.isDelivered ? 'bg-success' : 'bg-danger'"
+            class="badge"
+            >{{ row.isDelivered ? "Yes" : "No" }}</span
+          >
+        </p>
+
+        <p class="mb-0">
+          <span> Is Paid: </span>
+          <span
+            class="badge"
+            [class]="row.isPaid ? 'bg-success' : 'bg-danger'"
+            >{{ row.isPaid ? "Yes" : "No" }}</span
+          >
+        </p>
+        <span class="d-block">
+          Payment Method Type: {{ row.paymentMethodType }}
+        </span>
+        <span class="d-block">
+          totalOrderPrice: {{ row.totalOrderPrice }}
+        </span>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <hr class="my-3 mx-5" />
+    </div>
+  </div>
+</section>
+
+<ng-template #oreder>
+  <h1 class="text-center my-5 display-5">Your Orders Is Empty...</h1>
+</ng-template>
+
+</div>
+]
+----------------------------------------
+orders.component.ts file contain [import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { ProductsService } from 'src/app/core/services/products.service';
+
+@Component({
+  selector: 'app-orders',
+  templateUrl: './orders.component.html',
+  styleUrls: ['./orders.component.css']
+})
+export class OrdersComponent implements OnInit{
+  ordersData: any[] = [];
+  userId: string = '';
+  constructor(private _productService:ProductsService, private _AuthService:AuthService){
+
+  }
+  ngOnInit(): void {
+    this._AuthService.UserData.subscribe({
+      next: (res) => {
+        if (res !== null) {
+          this.userId = res.id;
+          this._productService.getUserOrdes(this.userId).subscribe({
+            next: (res) => {
+              this.ordersData = res;
+              console.log(this.ordersData)
+
+            },
+          });
+        }
+      },
+    });
+  }
+
+}
+]
+----------------------------------------
+product-details.component.html file contain [<div class="container py-5 mt-5">
+  <div class="row d-flex align-items-center">
+    <div class="col-md-4">
+       <div class="image">
+        <owl-carousel-o [options]="customOptions">
+
+          <ng-container *ngFor="let slide of productDetails.images">
+            <ng-template carouselSlide>
+              <img [src]="slide" >
+            </ng-template>
+          </ng-container>
+
+        </owl-carousel-o>
+       </div>
+    </div>
+    <div class="col-md-8">
+       <div class="data">
+        <h2>{{productDetails.title}}</h2>
+        <p class="text-muted">{{productDetails.description}}</p>
+
+        <div class="d-flex justify-content-between">
+          <span>{{productDetails.price}} EGP</span>
+          <div>
+            <i class="fa fa-star rating-color"></i>
+            {{productDetails.ratingsAverage}}
+          </div>
+        </div>
+        <button class="btn bg-main w-100 text-white" (click)="addProduct(productDetails._id)">+ Add To Cart</button>
+       </div>
+    </div>
+  </div>
+</div>
+]
+----------------------------------------
+product-details.component.ts file contain [import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ProductsService } from 'src/app/core/services/products.service';
+import { Product } from '../../core/interface/product';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { CartService } from 'src/app/cart/cart.service';
+
+@Component({
+  selector: 'app-product-details',
+  templateUrl: './product-details.component.html',
+  styleUrls: ['./product-details.component.css']
+})
+export class ProductDetailsComponent implements OnInit{
+  productId: String ="";
+  productDetails:Product = {} as Product;
+
+  customOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+    },
+    nav: true
+  }
+
+  constructor(private _activatedRoute:ActivatedRoute , private _productServices: ProductsService, private _cartService:CartService){
+    this._activatedRoute.paramMap.subscribe((res:any)=>{
+      this.productId=res.params.id
+    })
+    this._productServices.getProductsById(this.productId).subscribe({
+      next:(res)=>{
+         this.productDetails= res.data
+         console.log(this.productDetails)
+      }
+    })
+  }
+  addProduct(id:string){
+    this._cartService.addToCart(id).subscribe({
+      next:(res)=>{
+        console.log(res)
+        this._cartService.numOfCartItems.next(res.numOfCartItems)
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    })
+  }
+  ngOnInit(): void {
+
+  }
+
+}
+]
+----------------------------------------
+product-item.component.html file contain [<div class="product px-2 py-4 position-relative">
+<span class="icon position-absolute" role="button"  *ngIf="!wishlist.includes(product._id)" (click)="addProductToWishlist(product._id)">
+  <i class="fa-solid fa-heart text-main fs-3 " ></i>
+</span>
+<span class="icon position-absolute" role="button"  *ngIf="wishlist.includes(product._id)" (click)="RemovefromWishlist(product._id)">
+  <i class="fa-solid fa-heart-crack text-main fs-3"></i>
+</span>
+  <header href="" [routerLink]="['/productsDetails' , product._id]">
+  <div class="image ">
+    <img [src]="product.imageCover" alt="" class="w-100">
+  </div>
+    <p class="text-main">{{product.category.name}}</p>
+    <h2 class="h6">{{product.title.split(" ").splice(0,2).join(" ")}}</h2>
+    <div class="d-flex justify-content-between">
+       <span>{{product.price | concat}} EGP</span>
+       <div>
+         <i class="fa fa-star rating-color"></i>
+         {{product.ratingsAverage}}
+       </div>
+    </div>
+  </header>
+    <button class="btn bg-main w-100 text-white" (click)="addProduct(product._id)">+ Add</button>
+
+
+ </div>
+]
+----------------------------------------
+product-item.component.ts file contain [import { Component, Input, OnInit } from '@angular/core';
+import { Product } from '../../core/interface/product';
+import { CartService } from 'src/app/cart/cart.service';
+import { WishlistService } from './../../wishlist/wishlist.service';
+
+
+@Component({
+  selector: 'app-product-item',
+  templateUrl: './product-item.component.html',
+  styleUrls: ['./product-item.component.css']
+})
+export class ProductItemComponent implements OnInit{
+  @Input() product: Product = {} as Product
+wishlist:any[]=[]
+
+  constructor(private _cartService:CartService , private _wishlistService:WishlistService){
+
+  }
+  ngOnInit(): void {
+
+  }
+
+
+addProduct(id:string){
+  this._cartService.addToCart(id).subscribe({
+    next:(res)=>{
+     this._cartService.numOfCartItems.next(res.numOfCartItems)
+    },
+    error:(err)=>{
+      console.log(err);
+    }
+  })
+}
+addProductToWishlist(id:string){
+  this._wishlistService.addToWishlist(id).subscribe({
+    next:(res)=>{
+      this.wishlist=res.data
+      console.log(this.wishlist)
+     this._wishlistService.numOfWishlistItems.next(this.wishlist.length)
+    },
+    error:(err)=>{
+      console.log(err);
+    }
+  })
+}
+RemovefromWishlist(id:string){
+ this._wishlistService.removeItem(id).subscribe({
+  next:(res)=>{
+    this.wishlist=res.data
+    this._wishlistService.numOfWishlistItems.next(this.wishlist.length)
+  },
+    error:(err)=>{
+      console.log(err);
+    }
+ })
+}
+}
+]
+----------------------------------------
+products.component.html file contain [<div class="container py-5 mt-5">
+   <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+
+      <app-product-item *ngFor="let product of products"[product]="product"></app-product-item>
+
+   </div>
+</div>
+
+<nav aria-label="Page navigation example " class="d-flex justify-content-center pb-3 mb-3">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link disabled" href="#">Previous</a></li>
+    <li class="page-item" *ngFor="let page of pages" (click)="pageChanged(page)">
+      <a class="page-link">{{page}}</a>
+    </li>
+    <li class="page-item"><a class="page-link disabled" href="#">Next</a></li>
+  </ul>
+</nav>
+]
+----------------------------------------
+products.component.ts file contain [import { Component, OnInit } from '@angular/core';
+import { CartService } from 'src/app/cart/cart.service';
+import { Product } from 'src/app/core/interface/product';
+import { ProductsService } from 'src/app/core/services/products.service';
+
+@Component({
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.css']
+})
+export class ProductsComponent implements OnInit{
+  products: Product[] = [];
+  pages:number[]=[];
+  curentPage: number = 0;
+
+  constructor(private _produvtService: ProductsService, private _cartService: CartService){
+    this.pages =new Array(2).fill("").map((ele,index)=>index+1)
+    console.log(this.pages)
+  }
+  ngOnInit(): void {
+    this._produvtService.getProducts().subscribe({
+      next: (response) => {
+        this.products = response.data;
+        this.curentPage = response.metadata.currentPage;
+        console.log(this.products,this.curentPage)
+      },
+  })
+}
+pageChanged(pageNum: number): void {
+  this.curentPage = pageNum;
+  this._produvtService.getProducts(pageNum).subscribe({
+    next: (response) => {
+      this.products = response.data;
+      this.curentPage = response.metadata.currentPage;
+    },
+  });
+}
+addProduct(id:string){
+  this._cartService.addToCart(id).subscribe({
+    next:(res)=>{
+     this._cartService.numOfCartItems.next(res.numOfCartItems)
+    },
+    error:(err)=>{
+      console.log(err);
+    }
+  })
+}
+}
+]
+----------------------------------------
+sign-in.component.html file contain []
+----------------------------------------
+sign-in.component.ts file contain [import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
+
+@Component({
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.css'],
+})
+export class SignInComponent implements OnInit {
+  isloader = false;
+  apiError: any;
+  constructor(private _authServices: AuthService, private router: Router) {}
+
+  loginForm: FormGroup = new FormGroup({
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    password: new FormControl(null, [
+      Validators.required,
+      Validators.pattern(/^[A-z][a-z0-9]{3,8}$/),
+    ]),
+  });
+  login(form: FormGroup) {
+    // if(form.valid){
+    //   this.isloader=true;
+    //   this._authServices.login(form.value).subscribe({
+    //     next:(data:any)=>{
+    //       console.log(data)
+    //       this.isloader=false;
+    //       localStorage.setItem('userToken', data.token)
+    //       this._authServices.getUserData();
+    //       this.router.navigate(['/home'])
+    //     },
+    //     error:(err:any)=>{
+    //       console.log(err.error.message);
+    //       this.apiError=err.error.message;
+    //     }
+    // })
+    // }
+    // else{
+    // }
+  }
+
+  ngOnInit(): void {}
+}
+]
+----------------------------------------
+<div class="container py-5 mt-5">
+  <h3 class="mb-3 w-75 m-auto">Login Now:</h3>
+
+  <div class="alert alert-danger mx-auto w-75" *ngIf="apiError">
+    {{apiError}}
+  </div>
+  <form class="w-75 m-auto" [formGroup]="loginForm" (ngSubmit)="login(loginForm)">
+    <div class="mb-2">
+      <label for="email" class="mb-2">Email</label>
+      <input type="email" id="email" class="form-control" formControlName="email" placeholder="Enter Your Email">
+      <div class="alert alert-danger" *ngIf="loginForm.get('email')?.errors && loginForm.get('email')?.touched">
+        <p class="mb-0" *ngIf="loginForm.get('email')?.getError('required') ">This field is required</p>
+        <p class="mb-0" *ngIf="loginForm.get('email')?.getError('email')">Email is not valid</p>
+      </div>
+    </div>
+    <div class="mb-2">
+      <label for="password" class="mb-2">Password</label>
+      <input type="password" id="password" class="form-control" formControlName="password"
+        placeholder="Enter a Password">
+      <div class="alert alert-danger" *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched">
+        <p class="mb-0" *ngIf="loginForm.get('password')?.getError('required') ">This field is required</p>
+        <p class="mb-0" *ngIf="loginForm.get('password')?.getError('pattern')">Email is not valid</p>
+      </div>
+    </div>
+
+    <button class="btn bg-main text-white ms-auto d-flex" *ngIf="isloader">
+      <i class="fa fa-spinner fa-spin"></i>
+    </button>
+    <button class="btn bg-main text-white my-3 ms-auto d-block" *ngIf="!isloader"
+      [disabled]="loginForm.invalid">Login</button>
+  </form>
+</div>
+----------------------------------------
+sign-up.component.html file contain [<div class="container py-5 mt-5">
+  <h3 class="mb-3 w-75 m-auto">Register Now:</h3>
+
+  <div class="alert alert-danger mx-auto w-75" *ngIf="apiError">
+    {{apiError}}
+</div>
+  <form class="w-75 m-auto" [formGroup]="registerForm" (ngSubmit)="register(registerForm)">
+     <div class="mb-2">
+        <label for="name" class="mb-2">Name</label>
+        <input type="text" id="name" class="form-control" formControlName="name" placeholder="Enter Your Name">
+        <div class="alert alert-danger" *ngIf="registerForm.get('name')?.errors && registerForm.get('name')?.touched">
+          <p class="mb-0" *ngIf="registerForm.get('name')?.getError('required') ">This field is required</p>
+          <p class="mb-0" *ngIf="registerForm.get('name')?.getError('minlength')">min length is 3</p>
+          <p class="mb-0" *ngIf="registerForm.get('name')?.getError('maxlength')">max length is 20</p>
+     </div>
+     </div>
+     <div class="mb-2">
+        <label for="email" class="mb-2">Email</label>
+        <input type="email" id="email" class="form-control" formControlName="email" placeholder="Enter Your Email">
+        <div class="alert alert-danger" *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.touched">
+          <p class="mb-0" *ngIf="registerForm.get('email')?.getError('required') ">This field is required</p>
+          <p class="mb-0" *ngIf="registerForm.get('email')?.getError('email')">Email is not valid</p>
+     </div>
+     </div>
+     <div class="mb-2">
+        <label for="password" class="mb-2">Password</label>
+        <input type="password" id="password" class="form-control" formControlName="password" placeholder="Enter a Password">
+        <div class="alert alert-danger" *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.touched">
+          <p class="mb-0" *ngIf="registerForm.get('password')?.getError('required') ">This field is required</p>
+          <p class="mb-0" *ngIf="registerForm.get('password')?.getError('pattern')">Password is not valid</p>
+     </div>
+     </div>
+     <div class="mb-2">
+        <label for="rePassword" class="mb-2">RePassword</label>
+        <input type="password" id="rePassword" class="form-control" formControlName="rePassword"  placeholder="Enter a RePassword">
+        <div class="alert alert-danger" *ngIf="registerForm.get('rePassword')?.errors && registerForm.get('rePassword')?.touched">
+          <p class="mb-0" *ngIf="registerForm.get('rePassword')?.getError('required') ">This field is required</p>
+          <p class="mb-0" *ngIf="registerForm.get('rePassword')?.getError('pattern')">Confirm password does not match</p>
+     </div>
+     </div>
+     <div class="mb-2">
+        <label for="phone" class="mb-2">Phone</label>
+        <input type="text" id="phone" class="form-control" formControlName="phone"  placeholder="Enter Your Phone">
+        <div class="alert alert-danger" *ngIf="registerForm.get('phone')?.errors && registerForm.get('phone')?.touched">
+          <p class="mb-0" *ngIf="registerForm.get('phone')?.getError('required') ">This field is required</p>
+          <p class="mb-0" *ngIf="registerForm.get('phone')?.getError('minlength')">Phone min is 10</p>
+          <p class="mb-0" *ngIf="registerForm.get('phone')?.getError('maxlength')">Phone max is 13</p>
+     </div>
+     </div>
+     <button class="btn bg-main text-white ms-auto d-flex" *ngIf="isloader">
+      <i  class="fa fa-spinner fa-spin"></i>
+     </button>
+     <button class="btn bg-main text-white my-3 ms-auto d-block"  *ngIf="!isloader" [disabled]="registerForm.invalid">Register</button>
+  </form>
+</div>
+]
+----------------------------------------
+sign-up.component.ts file contain [import { Component, OnInit } from '@angular/core';
+import {FormGroup, FormControl, Validators} from '@angular/forms'
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
+
+@Component({
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.css']
+})
+export class SignUpComponent implements OnInit {
+  isloader=false;
+  apiError:any;
+  constructor( private _authServices: AuthService , private router:Router){}
+
+registerForm:FormGroup= new FormGroup({
+  name:new FormControl(null, [Validators.required, Validators.minLength(3),Validators.maxLength(20)]),
+  email:new FormControl(null, [Validators.required, Validators.email]),
+  password:new FormControl(null, [Validators.required, Validators.pattern(/^[A-z][a-z0-9]{3,8}$/)]),
+  rePassword:new FormControl(null, [Validators.required, Validators.pattern(/^[A-za-z0-9]{3,8}$/)]),
+  phone:new FormControl(null, [ Validators.required, Validators.minLength(10), Validators.maxLength(13)])
+})
+register(form:FormGroup){
+  if(form.valid){
+    this.isloader=true;
+    this._authServices.register(form.value).subscribe({
+      next:(res:any)=>{
+        console.log(res)
+        this.isloader=false;
+        this.router.navigate(['/login'])
+      },
+      error:(err:any)=>{
+        console.log(err.error.message);
+        this.apiError=err.error.message;
+      }
+    })
+  }
+  else{
+
+  }
+
+}
+
+ngOnInit(): void {
+
+}
+}
+]
+----------------------------------------
